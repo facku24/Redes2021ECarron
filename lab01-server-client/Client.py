@@ -1,6 +1,6 @@
 from os import system
 from socket import *
-from types import SimpleNamespace
+
 
 class Client:
 
