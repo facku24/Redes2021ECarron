@@ -1,5 +1,6 @@
 from socket import *
-from os import listdir
+from os import listdir, scandir
+from datetime import datetime
 
 class Server:
 		
@@ -29,6 +30,7 @@ class Server:
 
 	def close_socket(self):
 		self.__conn_socket.close()
+#-----------------------------------------------
 
 def list_files():
 	response = listdir()
@@ -46,7 +48,30 @@ def get_file(file):
 		return response
 
 def get_file_metadata(file):
-	pass
+	filesDir = list(scandir())
+
+	fileObj = None
+	for i in filesDir:
+		if i.name == file:
+			fileObj = i
+			break
+
+	metadataValues = tuple(fileObj.stat())
+
+	return f"""
+	{fileObj.name} metadata info:
+
+	Mode: {metadataValues[0]},
+	Inode Number: {metadataValues[1]},
+	Device Id: {metadataValues[2]},
+	Hard Links: {metadataValues[3]},
+	User Id: {metadataValues[4]},
+	Group Id: {metadataValues[5]},
+	Size: {metadataValues[6]} bytes,
+	Access Time: {datetime.fromtimestamp(metadataValues[7]).strftime("%A, %B %d, %Y %I:%M:%S")},
+	Modification Time: {datetime.fromtimestamp(metadataValues[8]).strftime("%A, %B %d, %Y %I:%M:%S")},
+	Last Metadata Change: {datetime.fromtimestamp(metadataValues[9]).strftime("%A, %B %d, %Y %I:%M:%S")}"""
+
 
 def close_socket():
 	return "CLOSE"
@@ -64,6 +89,11 @@ if __name__ == "__main__":
 
 	my_server = Server(server_ip, server_port)
 
+	
+	
+	while True:
+		sentence = my_server.receive_data().split(' ')
+		
 	# el servidor debe enviar:
     #  -LIST lista los ficheros en el directorio donde se ejecuta el server
 	#		encabezado = resultado de la operacion, tantas lineas como archivos en el dir
@@ -75,10 +105,6 @@ if __name__ == "__main__":
 	#		encabezado = resultado de la operacion, terminar la conexion
 	#print([i[0] for i in locals().items() if self is i[1]])
 	
-	
-	while True:
-		sentence = my_server.receive_data().split(' ')
-		
 
 		if len(sentence) == 1 and sentence[0] in query_dict:
 			response = query_dict[sentence[0]]()
