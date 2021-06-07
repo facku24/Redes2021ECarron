@@ -2,7 +2,7 @@
 							DEVOLUCION
 -------------------------------------------------------------------------
 NOMBRE: Carron, Diego
-CALIFICACIÓN: 0.96 (Aprobado)
+CALIFICACIÓN: 0.87 (Aprobado)
 Recordar: La calificación del laboratorio va de 0 (No Aprobado) a 1
  (Aprobado). La calificación no es definitiva y puede modificarse a 
  medida que el laboratorio sea mejorado.
@@ -15,6 +15,14 @@ Recordar: La calificación del laboratorio va de 0 (No Aprobado) a 1
 -------------------------------------------------------------------------
 	* Muy buen estilo de condificación y de manejo de clases.
 	* Muy buen estilo de comentarios.
+	* MEJORAS:
+	  * El hecho de que se limpie la pantalla luego de cada comando, vuelve
+	  incomodo poder seleccionar un archivo con el cual interactuar. Si el
+	  usuario desearia poder limpiar la pantalla, podria establecerse como
+	  comando a ser parseado.
+	  * Una recomendacion de los comandos aceptados suele resultar conveni
+	  ente para los usuarios que desconocen como interactuar. Ante un comando
+	  incorrecto o desconocido, se podria imprimir los comando aceptados.
 	* A CORREGIR:
 	* Estructura del directorio. Se requiere que el mismo presente 
 	 la siguiente forma:
@@ -33,13 +41,14 @@ Recordar: La calificación del laboratorio va de 0 (No Aprobado) a 1
 	 la forma correcta, significará una pérdida de puntos.
 
 -------------------------------------------------------------------------
-						FUNCIONAMIENTO (0.9 - Aprobado)
+						FUNCIONAMIENTO (0.6 - Aprobado)
 -------------------------------------------------------------------------
 * Muy buen manejo de los comandos. Cumple las especificaciones establecidas
   por el enunciado. El único inconveniente es que el servidor cierra su
   socket de escuchas luego de terminada una conexión con un cliente. Esto 
   rompe el paradigma cliente/servidor.
-
+* El comando GET solo retorna una parte del archivo, no su totalidad.
+  Además, debería guardar una copia del mismo.
 -------------------------------------------------------------------------
 						ENTREGA (1 - Aprobado)
 -------------------------------------------------------------------------
