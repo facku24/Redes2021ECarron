@@ -27,7 +27,7 @@ class Client:
 
 if __name__ == "__main__":
     serverName = '127.0.0.1'
-    serverPort = 12000
+    serverPort = 12001
 
     while True:
     

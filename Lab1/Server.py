@@ -76,9 +76,22 @@ def get_file_metadata(file):
 def close_socket():
 	return "CLOSE"
 
+
+	# el servidor debe enviar:
+    #  -LIST lista los ficheros en el directorio donde se ejecuta el server
+	#		encabezado = resultado de la operacion, tantas lineas como archivos en el dir
+    #  -GET <FILE> devuelve el archivo FILE en el directorioa del server
+	#		encabezado = resultado de la operacion, el archivo mismo
+    #  -METADATA <FILE> devuelve metadata del FILE en el dir del server
+	#		encabezado = resultado de la operacion, el archivo mismo
+    #  -CLOSE cierra la conexion entre las partes
+	#		encabezado = resultado de la operacion, terminar la conexion
+	#print([i[0] for i in locals().items() if self is i[1]])
+
+
 if __name__ == "__main__":
 	server_ip = '127.0.0.1'
-	server_port = 12000
+	server_port = 12001
 
 	query_dict = {
 		'LIST': list_files,
@@ -94,18 +107,6 @@ if __name__ == "__main__":
 	while True:
 		sentence = my_server.receive_data().split(' ')
 		
-	# el servidor debe enviar:
-    #  -LIST lista los ficheros en el directorio donde se ejecuta el server
-	#		encabezado = resultado de la operacion, tantas lineas como archivos en el dir
-    #  -GET <FILE> devuelve el archivo FILE en el directorioa del server
-	#		encabezado = resultado de la operacion, el archivo mismo
-    #  -METADATA <FILE> devuelve metadata del FILE en el dir del server
-	#		encabezado = resultado de la operacion, el archivo mismo
-    #  -CLOSE cierra la conexion entre las partes
-	#		encabezado = resultado de la operacion, terminar la conexion
-	#print([i[0] for i in locals().items() if self is i[1]])
-	
-
 		if len(sentence) == 1 and sentence[0] in query_dict:
 			response = query_dict[sentence[0]]()
 		elif len(sentence) == 2 and sentence[0] in query_dict:
