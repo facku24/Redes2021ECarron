@@ -26,17 +26,15 @@ class Client:
     def close_connection(self):
         self.__client_socket.close()
 
-    # def receive_file(self, file_name):
-    #    print('Receiving...')
-    #    file = open(file_name, 'wb')
-    #    lecture = self.receive_data()
-    #     while (lecture):
-    #        file.write(lecture)
-    #        lecture = self.receive_data()
-    #    file.close()
-
-
-
+    def receive_file(self, file_name):
+        lecture = my_cli.receive_data()
+        with open(file_name, 'wb') as file:
+            while lecture:
+                print('Receiving...')
+                file.write(lecture)
+                if len(lecture) < 1024:
+                    break
+                lecture = my_cli.receive_data()
 
 
 if __name__ == "__main__":
@@ -66,24 +64,7 @@ if __name__ == "__main__":
             input("Press <Enter> to exit")
             break
         elif response.split(' ')[0] == 'sending':
-            # my_cli.receive_file(response.split(' ')[1])
-            lecture = my_cli.receive_data()
-            with open(response.split(' ')[1], 'wb') as file:
-                while lecture:
-                    print('Receiving...')
-                    file.write(lecture)
-                    if len(lecture) < 1024:
-                        break
-                    lecture = my_cli.receive_data()
-            #file.close()
-            print('closed')
-
-
+            my_cli.receive_file(response.split(' ')[1])
+            print('File received...')
         else:
             print(f"From Server:\n\n{response}")
-
-
-
-
-
-

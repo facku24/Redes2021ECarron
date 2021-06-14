@@ -1,4 +1,3 @@
-from time import sleep
 from os import listdir, scandir
 from datetime import datetime
 
@@ -15,6 +14,8 @@ class CommandUtils:
             return getattr(self, command.swapcase(),
                            lambda a:
                            (command + ' ' + ' '.join(a)).upper())(arg)
+        else:
+            return (command + ' ' + ' '.join(arg)).upper()
 
     def help(self, arg):
         return "Command list:\n" \
@@ -44,16 +45,15 @@ class CommandUtils:
         try:
             with open(file_name[0], 'rb') as file:
                 self.connection_socket.send(f'sending {file_name[0]}'.encode())
+                print('Sending file...')
                 lecture = file.read(1024)
-                while (lecture):
-                    print('Sending...')
+                while lecture:
                     self.connection_socket.send(lecture)
                     # read another KB
                     lecture = file.read(1024)
-                print('enviado')
-                #self.connection_socket.send(b'DONE')
-                response = 'Operation finished'
-        except(Exception):
+            response = 'Operation finished'
+            print(response)
+        except Exception:
             response = 'File name error. Try another.'
         finally:
             return response
@@ -69,9 +69,6 @@ class CommandUtils:
 
     def close(self, arg):
         return 'Good bye...'
-
-
-
 
     '''
         Aux functions from here

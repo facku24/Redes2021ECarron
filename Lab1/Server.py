@@ -1,6 +1,7 @@
 from socket import *
 from CommandUtils import CommandUtils as CU
 
+
 class Server:
 
     def __init__(self, ip_addr, port, listen=1):
@@ -64,3 +65,4 @@ if __name__ == "__main__":
             if response == 'Good bye...':
                 my_server.close_connection_socket()
                 break
+
