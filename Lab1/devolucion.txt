@@ -53,4 +53,4 @@ Recordar: La calificación del laboratorio va de 0 (No Aprobado) a 1
 						ENTREGA (1 - Aprobado)
 -------------------------------------------------------------------------
 * Entregado en tiempo y en forma. Se permiten mejoras para subir la califi-
-  cación.
+  cación.Operation finishedOperation finished
