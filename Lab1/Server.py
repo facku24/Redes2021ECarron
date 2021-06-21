@@ -36,16 +36,15 @@ class Server:
     def close_connection_socket(self):
         self.__connection_socket.close()
 
-
 # el servidor debe enviar:
 #  -LIST lista los ficheros en el directorio donde se ejecuta el server
-#		encabezado = resultado de la operacion, tantas lineas como archivos en el dir
+#       encabezado = resultado de la operacion, tantas lineas como archivos en el dir
 #  -GET <FILE> devuelve el archivo FILE en el directorioa del server
-#		encabezado = resultado de la operacion, el archivo mismo
+# 		encabezado = resultado de la operacion, el archivo mismo
 #  -METADATA <FILE> devuelve metadata del FILE en el dir del server
-#		encabezado = resultado de la operacion, el archivo mismo
+# 		encabezado = resultado de la operacion, el archivo mismo
 #  -CLOSE cierra la conexion entre las partes
-#		encabezado = resultado de la operacion, terminar la conexion
+# 		encabezado = resultado de la operacion, terminar la conexion
 
 
 if __name__ == "__main__":
