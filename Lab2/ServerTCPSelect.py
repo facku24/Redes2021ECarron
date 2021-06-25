@@ -1,11 +1,16 @@
 import select
-from Server import Server
+import socket
+from CommandUtils import CommandUtils as CommandU
 
 server_ip = "localhost"
 server_port = 20001
 listen = 5
+welcome_msg = "Welcome!!!\nType HELP to see the command list."
 
-server = Server(server_ip, server_port, listen)
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((server_ip, server_port))
+server.listen(listen)
 
 # Sockets desde los cuales vamos a leer
 
@@ -19,33 +24,36 @@ outputs = []
 
 errors = []
 
-# print("Servidor funcionando...")
+print("Servidor funcionando...")
 
 while inputs:
     entradas, salidas, errores = select.select(inputs, outputs, errors)
 
     # Manejo de entradas
     for e in entradas:
-        if e is server:
-            e.accept_connection()
-            connection = e.get_connection_socket()
-            direction = e.get_client_addr()
-            # connection, direction = e.accept_connection()
-            print("Conexion establecida con el cliente", direction)
+        if e is server: # Server actions
+            connection, direccion = e.accept()
+            print("Conexion establecida con el cliente", direccion)
+            connection.send(welcome_msg.encode())
             connection.setblocking(0)
             inputs.append(connection)
-        else:
+        else: # Connection socket actions
+            commandU = CommandU(e)
             data = e.recv(1024)
             if data:
-                mensaje = data.decode()
-                print("Mensaje recibido:", mensaje)
-                e.send(mensaje.upper().encode())
+                message = data.decode()
+                connection_port = e.getpeername()
+                print("Mensaje recibido:", message, "from", connection_port)
+                msg_words = message.split()
+                response = commandU.switch(*msg_words)
+                e.send(response.encode())
+
 
 
     # Manejo de salidas
 
     for s in salidas:
-        pass
+        print(s)
 
     # Manejo de errores
 
