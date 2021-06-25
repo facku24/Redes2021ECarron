@@ -1,20 +1,11 @@
 import select
-import socket
-import sys
-from Lab2.CommandUtils import CommandUtils as CU
+from Server import Server
 
-param_list = sys.argv
+server_ip = "localhost"
+server_port = 20001
+listen = 5
 
-param_dict = {}
-
-for i in range(1, len(param_list) - 1, 2):
-    param_dict[param_list[i]] = param_list[i+1]
-
-
-
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(("localhost", 20001))
-server.listen(5)
+server = Server(server_ip, server_port, listen)
 
 # Sockets desde los cuales vamos a leer
 
@@ -28,7 +19,7 @@ outputs = []
 
 errors = []
 
-print("Servidor funcionando...")
+# print("Servidor funcionando...")
 
 while inputs:
     entradas, salidas, errores = select.select(inputs, outputs, errors)
@@ -36,8 +27,11 @@ while inputs:
     # Manejo de entradas
     for e in entradas:
         if e is server:
-            connection, direccion = e.accept()
-            print("Conexion establecida con el cliente", direccion)
+            e.accept_connection()
+            connection = e.get_connection_socket()
+            direction = e.get_client_addr()
+            # connection, direction = e.accept_connection()
+            print("Conexion establecida con el cliente", direction)
             connection.setblocking(0)
             inputs.append(connection)
         else:
@@ -51,7 +45,7 @@ while inputs:
     # Manejo de salidas
 
     for s in salidas:
-        print(s)
+        pass
 
     # Manejo de errores
 
