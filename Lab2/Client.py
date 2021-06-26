@@ -43,20 +43,9 @@ if __name__ == "__main__":
 
     my_cli = Client(serverName, serverPort)
     system('clear')
-    print(my_cli.receive_decoded_data())
+    my_cli.send_encoded_data("Yippee-Ki-Yay")
+
     while True:
-
-        sentence = input("\n>>> ")
-        if sentence == 'clear()':
-            system('clear')
-
-        # el cliente puede enviar:
-        #  -LIST lista los ficheros en el directorio donde se ejecuta el server
-        #  -GET <FILE> devuelve el archivo FILE en el directorioa del server
-        #  -METADATA <FILE> devuelve metadata del FILE en el dir del server
-        #  -CLOSE cierra la conexion entre las partes
-
-        my_cli.send_encoded_data(sentence)
         response = my_cli.receive_decoded_data()
         if response == 'Good bye...':
             print(f"From Server: Connection finished...\n{response}\n")
@@ -68,3 +57,19 @@ if __name__ == "__main__":
             print('File received...')
         else:
             print(f"From Server:\n\n{response}")
+
+        # Client sending message
+        sentence = ''
+        while sentence == '':
+            sentence = input("\n>>> ")
+
+        if sentence == 'clear()':
+            system('clear')
+
+        # el cliente puede enviar:
+        #  -LIST lista los ficheros en el directorio donde se ejecuta el server
+        #  -GET <FILE> devuelve el archivo FILE en el directorioa del server
+        #  -METADATA <FILE> devuelve metadata del FILE en el dir del server
+        #  -CLOSE cierra la conexion entre las partes
+
+        my_cli.send_encoded_data(sentence)
