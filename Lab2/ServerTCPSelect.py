@@ -1,11 +1,23 @@
 import select
 import socket
+import argparse
 from CommandUtils import CommandUtils as CommandU
 
-server_ip = "localhost"
-server_port = 20000
-listen = 5
-messages = {}  # OJO. Ver creciimento de este objeto.
+
+parser = argparse.ArgumentParser(description="Process cli args")
+parser.add_argument('--saddr', default="127.0.0.1", type=str, help="Set the server's ip address. Default 127.0.0.1")
+parser.add_argument('--port', default=20000, type=int, help="Set the port that the server listens on.\
+                    Default port 20000.")
+parser.add_argument('--listen', default=10, type=int, help="it specifies the number of unaccepted\
+                    connections that the system will allow before refusing new connections. \
+                    Default value is 10.")
+
+args = parser.parse_args()
+
+server_ip = args.saddr
+server_port = args.port
+listen = args.listen
+messages = {}
 welcome_msg = "Welcome!!!\nType HELP to see the command list."
 closing_msg = "Good bye..."
 
@@ -13,6 +25,7 @@ closing_msg = "Good bye..."
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((server_ip, server_port))
 server.listen(listen)
+
 
 # Sockets desde los cuales vamos a leer
 

@@ -1,3 +1,4 @@
+import argparse
 from os import system
 from socket import *
 
@@ -38,8 +39,15 @@ class Client:
 
 
 if __name__ == "__main__":
-    serverName = '127.0.0.1'
-    serverPort = 20000
+    parser = argparse.ArgumentParser(description="Process cli args")
+    parser.add_argument('--saddr', default="127.0.0.1", type=str, help="Set the server's ip address. Default 127.0.0.1")
+    parser.add_argument('--port', default=20000, type=int, help="Set the server's port.\
+                        Default port 20000.")
+
+    args = parser.parse_args()
+
+    serverName = args.saddr
+    serverPort = args.port
 
     my_cli = Client(serverName, serverPort)
     system('clear')
