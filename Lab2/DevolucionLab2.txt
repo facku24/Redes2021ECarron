@@ -1,0 +1,39 @@
+-------------------------------------------------------------------------
+					DEVOLUCION LABORATORIO 2
+-------------------------------------------------------------------------
+NOMBRE: Carron, Diego
+CALIFICACIÓN: 0.93 (Aprobado)
+
+-------------------------------------------------------------------------
+							COMENTARIOS
+-------------------------------------------------------------------------
+	* Como buena practica de programacion, muchas veces es bueno comentar
+	las funciones para entender su funcionamiento. Ayuda a entender el 
+	código o bien, porciones del mismo.
+	* Los mensajes de establecimiento y finalización de comunicacion, son 
+	necesarios? No hay una mejor manera de manejas la apertura y cierre de 
+	las mismas?
+	* No se crea un documento con los logs de los comandos ejecutados y 
+	el cliente con quien se establece la conexion.
+	* Buen feature el manejo de path para el comando LIST
+	* El <Enter> al finalizar la conexion es un detalle que no siempre suele
+	ser muy practico. Si un usuario requiere el cierre, no debería re validar.
+	* Ciertos logs en el server, como por ejemplo "mensaje enviado" pueden ser
+	útiles en un momento de debugueo, pero a menos que aporte un contenido
+	significativo (como por ejemplo los implementados para los comandos), 
+	pueden volverse demasido verborrágicos y ser contraproducentes.
+
+-------------------------------------------------------------------------
+							CODIFICACION (1 - Aprobado)
+-------------------------------------------------------------------------
+	* Muy buen estilo de condificación y de manejo de clases.
+
+-------------------------------------------------------------------------
+						FUNCIONAMIENTO (0.8 - Aprobado)
+-------------------------------------------------------------------------
+	* Al obtener un archivo, queda un remanente de mensaje, "Operation 
+	finished". Eso no debería funcionar de esa manera.
+
+-------------------------------------------------------------------------
+						ENTREGA (1 - Aprobado)
+-------------------------------------------------------------------------
