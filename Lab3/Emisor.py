@@ -40,6 +40,7 @@ while inputs:
         else:
             print(package.datos)
             secuencia = (incomming_package.secuencia + 1) % 2
+            last_sended = None
 
 
     for output in outputs:
