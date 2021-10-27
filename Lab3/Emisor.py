@@ -20,10 +20,11 @@ outputs = [emisor]
 errors = []
 
 while inputs:
-    entradas, salidas, errores = select.select(inputs, outputs, errors, float(timer))
+    entradas, salidas, errores = select.select(inputs, outputs, errors)#, float(timer))
 
     # Timeout retorna tres listas vacías
-    if entradas == [] and salidas == [] and errores == []:
+    # if entradas == [] and salidas == [] and errores == []:
+    if timer == 0:
         message = last_sended
         emisor.sendto(message, (NETWORK_IP, NETWORK_PORT))
         timer = TIMEOUT
@@ -53,6 +54,5 @@ while inputs:
             last_sended = message
             timer = TIMEOUT
         sleep(1)
-        if timer != 0:
-            timer -= 1
+        timer -= 1
 
