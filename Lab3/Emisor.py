@@ -1,37 +1,58 @@
+import select
 from time import sleep
 from socket import *
 from constantes import *
 from paquete import Paquete
+
 
 receiver = (RECEPTOR_IP, RECEPTOR_PORT)
 
 emisor = socket(AF_INET, SOCK_DGRAM)
 emisor.bind((EMISOR_IP, EMISOR_PORT))
 
-data = input('Input lowercase sentence:')
-
-secuencia = SECUENCE_INIT
-
-package = Paquete(EMISOR_PORT, RECEPTOR_PORT, data, secuencia)
-message = dumps((receiver, package))
-
-emisor.sendto(message, (NETWORK_IP, NETWORK_PORT))
 timer = TIMEOUT
-while timer >= 0:
-    #ver en caso de perdido que no sea bloqueante la lectura de msjs de llegada
-    incoming_message, serverAddress = emisor.recvfrom(LONGITUD_UDP)
-    sender, incomming_package = loads(incoming_message)
-    if timer == 0 or package.checksum != int(incomming_package.datos) or incomming_package.secuencia == secuencia:
+secuencia = SECUENCE_INIT % 2
+
+last_sended = None
+
+inputs = [emisor]
+outputs = [emisor]
+errors = []
+
+while inputs:
+    entradas, salidas, errores = select.select(inputs, outputs, errors, float(timer))
+
+    # Timeout retorna tres listas vacías
+    if entradas == [] and salidas == [] and errores == []:
+        message = last_sended
         emisor.sendto(message, (NETWORK_IP, NETWORK_PORT))
         timer = TIMEOUT
-        print("reenviado")
-    else:
-        print("Se entregó ok")
-        #En caso de tener el emisor en bucle incrementar secuencia
-        break
-    sleep(1)
-    timer -= 1
+
+    for input_signal in entradas:
+        incoming_message, serverAddress = emisor.recvfrom(LONGITUD_UDP)
+        sender, incomming_package = loads(incoming_message)
+
+        if incomming_package.secuencia == secuencia:
+            message = last_sended
+            emisor.sendto(message, (NETWORK_IP, NETWORK_PORT))
+            timer = TIMEOUT
+        else:
+            print(package.datos)
+            secuencia = (incomming_package.secuencia + 1) % 2
 
 
+    for output in outputs:
 
-emisor.close()
+        if last_sended == None or loads(last_sended)[1].secuencia != secuencia:
+            data = input('Input lowercase sentence:')
+
+            package = Paquete(EMISOR_PORT, RECEPTOR_PORT, data, secuencia)
+            message = dumps((receiver, package))
+
+            emisor.sendto(message, (NETWORK_IP, NETWORK_PORT))
+            last_sended = message
+            timer = TIMEOUT
+        sleep(1)
+        if timer != 0:
+            timer -= 1
+

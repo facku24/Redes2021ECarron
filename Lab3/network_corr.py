@@ -29,7 +29,7 @@ def shut_down(socket, signal, frame):
 
 def corruptNet(sock, sender, receiver, pckt):
 	if (sender == (EMISOR_IP, EMISOR_PORT)):
-		prob = choice([3,3,3,3,3,3,3,5])#int(random() * 10)
+		prob = choice([3,3,3,3,3,3,5])#int(random() * 10)
 		if prob < 2:
 			# Paquete Corrupto
 			pckt = corrupt_packet(pckt)
