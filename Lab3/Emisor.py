@@ -22,7 +22,7 @@ errors = []
 while inputs:
     entradas, salidas, errores = select.select(inputs, outputs, errors)#, float(timer))
 
-    # Timeout retorna tres listas vacías
+    # Timeout retorna tres listas vacías -> no funció como se esperaba, se deja comentado para revisión
     # if entradas == [] and salidas == [] and errores == []:
     if timer == 0:
         message = last_sended
