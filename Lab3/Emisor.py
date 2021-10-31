@@ -39,7 +39,7 @@ while inputs:
             timer = TIMEOUT
         else:
             print(package.datos)
-            secuencia = (incomming_package.secuencia + 1) % 2
+            secuencia = incomming_package.secuencia
             last_sended = None
 
 
